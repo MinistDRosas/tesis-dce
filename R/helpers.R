@@ -2834,56 +2834,102 @@ crear_comparacion_tarea_dce <- function(
     atributos = atributos
   )
 
-  filas <- lapply(
+  celda_nivel <- function(detalle) {
+
+    tagList(
+      tags$span(
+        class = "dce-nivel-etiqueta",
+        detalle$etiqueta
+      ),
+
+      if (nzchar(detalle$descripcion)) {
+        tags$details(
+          class = "dce-nivel-detalle",
+
+          tags$summary(
+            class = "dce-nivel-info",
+            title = "Haga clic para ver la explicación de este nivel",
+            "ⓘ"
+          ),
+
+          tags$div(
+            class = "dce-nivel-descripcion",
+            detalle$descripcion
+          )
+        )
+      }
+    )
+  }
+
+  obtener_datos_atributo <- function(i) {
+
+    fila_atributo <- atributos_categoria[
+      i,
+      ,
+      drop = FALSE
+    ]
+
+    atributo_id <- as.character(
+      fila_atributo$atributo_id[[1]]
+    )
+
+    nombre_atributo <- as.character(
+      fila_atributo$nombre[[1]]
+    )
+
+    if (is.na(nombre_atributo)) {
+      nombre_atributo <- atributo_id
+    }
+
+    nivel_a_id <- as.character(
+      perfil_a[[atributo_id]]
+    )
+
+    nivel_b_id <- as.character(
+      perfil_b[[atributo_id]]
+    )
+
+    detalle_a <- obtener_detalle_nivel_dce(
+      categoria_id = categoria_id,
+      atributo_id = atributo_id,
+      nivel_id = nivel_a_id,
+      niveles = niveles
+    )
+
+    detalle_b <- obtener_detalle_nivel_dce(
+      categoria_id = categoria_id,
+      atributo_id = atributo_id,
+      nivel_id = nivel_b_id,
+      niveles = niveles
+    )
+
+    list(
+      atributo_id = atributo_id,
+      nombre_atributo = nombre_atributo,
+      detalle_a = detalle_a,
+      detalle_b = detalle_b
+    )
+  }
+
+  datos_atributos <- lapply(
     seq_len(
       nrow(atributos_categoria)
     ),
-    function(i) {
+    obtener_datos_atributo
+  )
 
-      fila_atributo <- atributos_categoria[
-        i,
-        ,
-        drop = FALSE
-      ]
+  # ------------------------------------------------
+  # Vista de escritorio / tablet: tabla A-B clásica
+  # ------------------------------------------------
 
-      atributo_id <- as.character(
-        fila_atributo$atributo_id[[1]]
-      )
-
-      nombre_atributo <- as.character(
-        fila_atributo$nombre[[1]]
-      )
-
-      if (is.na(nombre_atributo)) {
-        nombre_atributo <- atributo_id
-      }
-
-      nivel_a_id <- as.character(
-        perfil_a[[atributo_id]]
-      )
-
-      nivel_b_id <- as.character(
-        perfil_b[[atributo_id]]
-      )
-
-      detalle_a <- obtener_detalle_nivel_dce(
-        categoria_id = categoria_id,
-        atributo_id = atributo_id,
-        nivel_id = nivel_a_id,
-        niveles = niveles
-      )
-
-      detalle_b <- obtener_detalle_nivel_dce(
-        categoria_id = categoria_id,
-        atributo_id = atributo_id,
-        nivel_id = nivel_b_id,
-        niveles = niveles
-      )
+  filas <- lapply(
+    datos_atributos,
+    function(datos) {
 
       clase_fila <-
         if (
           identical(
-            atributo_id,
+            datos$atributo_id,
             "precio_mensual"
           )
         ) {
@@ -2892,61 +2938,34 @@ crear_comparacion_tarea_dce <- function(
           NULL
         }
 
-      celda_nivel <- function(detalle) {
-
-        tagList(
-          tags$span(
-            class = "dce-nivel-etiqueta",
-            detalle$etiqueta
-          ),
-
-          if (nzchar(detalle$descripcion)) {
-            tags$details(
-              class = "dce-nivel-detalle",
-
-              tags$summary(
-                class = "dce-nivel-info",
-                title = "Haga clic para ver la explicación de este nivel",
-                "ⓘ"
-              ),
-
-              tags$div(
-                class = "dce-nivel-descripcion",
-                detalle$descripcion
-              )
-            )
-          }
-        )
-      }
-
       tags$tr(
         class = clase_fila,
 
         tags$td(
           class = "dce-celda-atributo",
           tags$strong(
-            nombre_atributo
+            datos$nombre_atributo
           )
         ),
 
         tags$td(
           class = "dce-celda-alternativa",
           celda_nivel(
-            detalle_a
+            datos$detalle_a
           )
         ),
 
         tags$td(
           class = "dce-celda-alternativa",
           celda_nivel(
-            detalle_b
+            datos$detalle_b
           )
         )
       )
     }
   )
 
-  div(
+  tabla_escritorio <- div(
     class = "dce-comparacion-wrapper",
 
     tags$table(
@@ -2974,8 +2993,96 @@ crear_comparacion_tarea_dce <- function(
       )
     )
   )
-}
 
+  # ------------------------------------------------
+  # Vista móvil: perfil A completo y luego perfil B
+  # ------------------------------------------------
+
+  crear_perfil_movil <- function(
+      titulo,
+      alternativa
+  ) {
+
+    items <- lapply(
+      datos_atributos,
+      function(datos) {
+
+        detalle <-
+          if (identical(alternativa, "A")) {
+            datos$detalle_a
+          } else {
+            datos$detalle_b
+          }
+
+        clase_item <- paste(
+          "dce-movil-item",
+          if (
+            identical(
+              datos$atributo_id,
+              "precio_mensual"
+            )
+          ) {
+            "dce-movil-item-precio"
+          } else {
+            ""
+          }
+        )
+
+        div(
+          class = clase_item,
+
+          div(
+            class = "dce-movil-atributo",
+            datos$nombre_atributo
+          ),
+
+          div(
+            class = "dce-movil-nivel",
+            celda_nivel(
+              detalle
+            )
+          )
+        )
+      }
+    )
+
+    div(
+      class = paste0(
+        "dce-movil-perfil dce-movil-perfil-",
+        tolower(alternativa)
+      ),
+
+      div(
+        class = "dce-movil-perfil-titulo",
+        titulo
+      ),
+
+      div(
+        class = "dce-movil-perfil-contenido",
+        items
+      )
+    )
+  }
+
+  vista_movil <- div(
+    class = "dce-comparacion-movil",
+
+    crear_perfil_movil(
+      titulo = "Alternativa A",
+      alternativa = "A"
+    ),
+
+    crear_perfil_movil(
+      titulo = "Alternativa B",
+      alternativa = "B"
+    )
+  )
+
+  tagList(
+    tabla_escritorio,
+    vista_movil
+  )
+}
 
 
 # ==================================================

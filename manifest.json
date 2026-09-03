@@ -2884,10 +2884,10 @@
       "checksum": "c14993caa76d3c7c1fd186630754b62e"
     },
     ".Rprofile": {
-      "checksum": "b2e89ede5b567808b2937379c38629ac"
+      "checksum": "ba79b575b9913e70f0913c24bdfc9295"
     },
     "app.R": {
-      "checksum": "ab1629f86d445a0598e3172759c0bcd3"
+      "checksum": "aac5c7dabf6f462cb8a5599f4f5005b3"
     },
     "data/content/instrumento_DCE.xlsx": {
       "checksum": "950909a48fc9113aff77214b59f09a19"
@@ -2915,6 +2915,12 @@
     },
     "data/responses/borradores/20260831185616_655096.rds": {
       "checksum": "368e400020da7d461d7de9e8c4aa0e62"
+    },
+    "data/responses/borradores/20260903104554_117232.rds": {
+      "checksum": "3dab6a72a8acbdb6a15b15f272c76e1c"
+    },
+    "data/responses/borradores/20260903104628_981018.rds": {
+      "checksum": "af45bf7e8583891d94da6c5912ff7501"
     },
     "data/responses/sesiones_completas/20260830182743_286912/atributos_presentados_dce.csv": {
       "checksum": "f5199e96b7737834a008fafca7be4c18"
@@ -2956,7 +2962,7 @@
       "checksum": "499035acf912248ad41b160c4658f482"
     },
     "R/helpers.R": {
-      "checksum": "dbd54d3ddf6e961108390f2d1cdc15dc"
+      "checksum": "d1c3218d77e574f5ab8c1953dcbe9f50"
     },
     "renv.lock": {
       "checksum": "aea25c3a13dc42d7dfb996d26550b144"

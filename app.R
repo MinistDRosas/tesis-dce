@@ -336,6 +336,10 @@ ui <- page_fluid(
           background: #ffffff;
         }
 
+        .dce-comparacion-movil {
+          display: none;
+        }
+
         .dce-comparacion {
           width: 100%;
           border-collapse: collapse;
@@ -465,7 +469,7 @@ ui <- page_fluid(
         ---------------------------------------- */
 
         @media (max-width: 700px) {
-          
+
           .contenedor-encuesta {
             padding: 15px;
           }
@@ -475,93 +479,67 @@ ui <- page_fluid(
             grid-template-columns: 1fr;
           }
 
-          /* En móviles, cada atributo se presenta verticalmente:
-             nombre del atributo -> Alternativa A -> Alternativa B.
-             Así se evita el desplazamiento horizontal de la tabla. */
+          /* En móviles se oculta la tabla horizontal y se muestra
+             cada perfil completo: primero A y luego B. */
           .dce-comparacion-wrapper {
-            overflow-x: visible;
-          }
-
-          .dce-comparacion {
-            min-width: 0;
-            width: 100%;
-            table-layout: auto;
-          }
-
-          .dce-comparacion thead {
             display: none;
           }
 
-          .dce-comparacion tbody,
-          .dce-comparacion tr,
-          .dce-comparacion td {
+          .dce-comparacion-movil {
             display: block;
-            width: 100%;
+            margin: 18px 0 22px 0;
           }
 
-          .dce-comparacion tbody tr {
-            padding: 0;
+          .dce-movil-perfil {
+            margin-bottom: 18px;
+            overflow: hidden;
+            border: 1px solid #d9e2e8;
+            border-radius: 12px;
+            background: #ffffff;
           }
 
-          .dce-comparacion tbody tr:not(:last-child) {
+          .dce-movil-perfil-titulo {
+            padding: 14px 16px;
+            background: #f3f6f8;
+            color: #243746;
+            font-size: 1.08rem;
+            font-weight: 700;
             border-bottom: 1px solid #d9e2e8;
           }
 
-          .dce-comparacion th,
-          .dce-comparacion td,
-          .dce-comparacion tbody tr:last-child td {
+          .dce-movil-item {
+            padding: 12px 16px 13px 16px;
+            border-bottom: 1px solid #e7ecef;
+          }
+
+          .dce-movil-item:last-child {
             border-bottom: none;
           }
 
-          .dce-celda-atributo {
-            padding: 12px 14px 9px 14px;
-            background: #f3f6f8;
-          }
-
-          .dce-celda-alternativa {
-            padding: 10px 14px;
-            text-align: left;
-          }
-
-          .dce-celda-alternativa:nth-child(2) {
-            border-top: 1px solid #eef2f4;
-          }
-
-          .dce-celda-alternativa:nth-child(3) {
-            border-top: 1px dashed #e1e7eb;
-          }
-
-          .dce-celda-alternativa:nth-child(2)::before,
-          .dce-celda-alternativa:nth-child(3)::before {
-            display: block;
-            margin-bottom: 4px;
-            color: #2c3e50;
-            font-size: 0.88rem;
-            font-weight: 700;
-          }
-
-          .dce-celda-alternativa:nth-child(2)::before {
-            content: 'Alternativa A';
-          }
-
-          .dce-celda-alternativa:nth-child(3)::before {
-            content: 'Alternativa B';
-          }
-
-          .dce-fila-precio {
+          .dce-movil-item-precio {
+            background: #f8fafb;
             border-top: 2px solid #cbd5dc;
           }
 
-          .dce-fila-precio td {
-            border-top: none;
+          .dce-movil-atributo {
+            margin-bottom: 4px;
+            color: #243746;
+            font-size: 0.91rem;
+            font-weight: 700;
+            line-height: 1.3;
           }
 
-          .dce-nivel-detalle[open] {
+          .dce-movil-nivel {
+            font-size: 1rem;
+            line-height: 1.4;
+          }
+
+          .dce-movil-nivel .dce-nivel-detalle[open] {
             margin-left: 0;
             margin-right: 0;
           }
 
-          /* Las opciones de respuesta también se apilan en pantallas angostas. */
+          /* Las opciones de respuesta se apilan debajo de ambos perfiles. */
           .dce-eleccion .radio-inline {
             display: block;
             margin-left: 0;
