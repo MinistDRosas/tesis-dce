@@ -1,0 +1,21 @@
+# Credenciales y variables locales
+.Renviron
+
+# Sesiones y respuestas
+data/responses/
+
+# Archivos temporales de R/RStudio
+.RData
+.Rhistory
+.Rproj.user/
+
+# Librería local de renv
+renv/library/
+renv/staging/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Script local que puede contener contraseña
+sql/003_establecer_password_tesis_dce_app.sql

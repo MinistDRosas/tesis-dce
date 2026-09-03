@@ -1,0 +1,4 @@
+"categoria_id","n_sets","n_blocks","tareas_por_bloque","n_perfiles_validos","n_parametros_atributos","n_parametros_total","DB_error","ortogonalidad","seed"
+"gestion_marketing",16,4,4,2295,15,16,0.250921725594027,0.821242253816368,20261830
+"atencion_cliente",16,4,4,357,10,11,0.180523300340302,0.839985228298101,20262830
+"inventario_logistica",16,4,4,156,9,10,0.221237621826533,0.854446225955753,20263830

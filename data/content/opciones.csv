@@ -1,0 +1,28 @@
+﻿pregunta_id,valor,etiqueta,orden
+cargo,dueno_socio,Dueño/a o socio/a,1
+cargo,gerencia,Gerente general o administrador/a,2
+cargo,jefatura,Jefatura o encargado/a de área,3
+cargo,otro,Otro cargo con conocimiento de las decisiones de la empresa,4
+conocimiento_ia,ninguno,Ninguno,1
+conocimiento_ia,basico,Básico,2
+conocimiento_ia,intermedio,Intermedio,3
+conocimiento_ia,avanzado,Avanzado,4
+actividad_principal,comercio_minorista,Comercio minorista,1
+actividad_principal,comercio_mayorista,Comercio mayorista,2
+actividad_principal,servicios,Servicios,3
+actividad_principal,manufactura,Manufactura,4
+actividad_principal,otra,Otra actividad,5
+ventas_anuales,hasta_2400_uf,Hasta 2.400 UF,1
+ventas_anuales,2400_25000_uf,Más de 2.400 y hasta 25.000 UF,2
+ventas_anuales,25000_100000_uf,Más de 25.000 y hasta 100.000 UF,3
+ventas_anuales,sobre_100000_uf,Más de 100.000 UF,4
+ventas_anuales,no_sabe,No sabe / Prefiere no responder,5
+uso_ia,si,Sí,1
+uso_ia,no,No,2
+uso_ia,no_sabe,No sabe,3
+sistemas_digitales,pos,Sistema de punto de venta (POS),1
+sistemas_digitales,erp,ERP,2
+sistemas_digitales,crm,CRM,3
+sistemas_digitales,ecommerce,Plataforma de comercio electrónico,4
+sistemas_digitales,inventario,Sistema de gestión de inventario,5
+sistemas_digitales,ninguno,Ninguno de los anteriores,6

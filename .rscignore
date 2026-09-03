@@ -1,0 +1,7 @@
+.Renviron
+.RData
+.Rhistory
+.Rproj.user/
+data/responses/
+renv/library/
+renv/staging/

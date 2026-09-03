@@ -1,0 +1,8 @@
+﻿id,pagina,orden,tipo,texto
+bienvenida_titulo,bienvenida,1,titulo,BIENVENIDO Encuesta sobre soluciones de inteligencia artificial para empresas del comercio minorista
+bienvenida_intro,bienvenida,2,parrafo,Esta encuesta forma parte de una investigación académica sobre la valoración de soluciones basadas en inteligencia artificial por parte de pequeñas y medianas empresas del comercio minorista.
+consentimiento,bienvenida,3,parrafo,Su participación es voluntaria. Las respuestas serán utilizadas únicamente con fines académicos y serán analizadas de forma agregada.
+"instruccion_empresa,caracterizacion,1,parrafo,""En las siguientes preguntas, responda considerando a la empresa en su conjunto. Si la empresa posee más de un establecimiento o local, considere todos ellos salvo que la pregunta indique expresamente lo contrario."""
+"dce_intro,dce_intro,1,parrafo,""A continuación se le presentarán distintas alternativas hipotéticas de servicios basados en inteligencia artificial. En cada tarea, seleccione la alternativa que preferiría contratar para su empresa o indique que no elegiría ninguna."""
+final_titulo,finalizacion,1,titulo,Muchas gracias por su participación
+final_texto,finalizacion,2,parrafo,Sus respuestas han sido registradas. Gracias por dedicar tiempo a esta investigación.

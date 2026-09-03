@@ -1,0 +1,11 @@
+﻿id,pagina,orden,texto,tipo,obligatoria,ayuda,placeholder
+cargo,caracterizacion,1,¿Cuál es su posición o cargo principal dentro de la empresa?,radio,True,Seleccione la alternativa que mejor represente su función principal.,
+conocimiento_ia,caracterizacion,2,¿Cómo describiría su nivel de conocimiento sobre inteligencia artificial?,radio,True,,
+actividad_principal,caracterizacion,3,¿Cuál es la actividad principal de la empresa?,select,True,Considere la actividad que genera la mayor parte de las ventas de la empresa.,
+ventas_anuales,caracterizacion,4,¿En qué tramo se encuentran aproximadamente las ventas anuales de la empresa?,radio,True,Considere las ventas del último año calendario.,
+trabajadores,caracterizacion,5,¿Cuántos trabajadores tiene actualmente la empresa?,numeric,True,Considere el total de trabajadores de la empresa.,Ingrese un número
+antiguedad,caracterizacion,6,¿Cuántos años de antigüedad tiene aproximadamente la empresa?,numeric,True,,Ingrese un número
+comuna,caracterizacion,7,¿En qué comuna se ubica la sede principal de la empresa?,select,True,,Seleccione una comuna
+uso_ia,caracterizacion,8,¿La empresa utiliza actualmente alguna herramienta o solución basada en inteligencia artificial?,radio,True,,
+sistemas_digitales,caracterizacion,9,¿Qué sistemas o herramientas digitales utiliza actualmente la empresa?,checkbox,False,Puede seleccionar más de una alternativa.,
+n_establecimientos,caracterizacion,10,¿Cuántos establecimientos o locales opera actualmente la empresa?,numeric,True,"Incluya la sede principal y los demás establecimientos, si corresponde.",Ingrese un número

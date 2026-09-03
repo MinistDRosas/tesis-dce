@@ -1,0 +1,12 @@
+# Copiar estas variables a un archivo llamado .Renviron en la raíz
+# del proyecto SOLO para pruebas locales. No compartir ni subir ese archivo.
+#
+# En Supabase: botón Connect -> Session pooler -> View parameters.
+
+DCE_DB_HOST=aws-0-REGION.pooler.supabase.com
+DCE_DB_PORT=5432
+DCE_DB_NAME=postgres
+DCE_DB_USER=postgres.PROJECT_REF
+DCE_DB_PASSWORD=REEMPLAZAR_CON_PASSWORD_REAL
+DCE_DB_SSLMODE=require
+DCE_TIMEZONE=America/Santiago
