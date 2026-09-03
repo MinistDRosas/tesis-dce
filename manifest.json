@@ -2884,10 +2884,10 @@
       "checksum": "c14993caa76d3c7c1fd186630754b62e"
     },
     ".Rprofile": {
-      "checksum": "f5f5c52eee3a6fb26bea0ade006625b3"
+      "checksum": "b2e89ede5b567808b2937379c38629ac"
     },
     "app.R": {
-      "checksum": "46ffe88ce9dee58a66d5be2421aa5817"
+      "checksum": "ab1629f86d445a0598e3172759c0bcd3"
     },
     "data/content/instrumento_DCE.xlsx": {
       "checksum": "950909a48fc9113aff77214b59f09a19"
@@ -2909,6 +2909,12 @@
     },
     "data/design/resumen_diseno_dce.csv": {
       "checksum": "c473ebc6311bd594576eb182e9b88627"
+    },
+    "data/responses/borradores/20260831165828_967494.rds": {
+      "checksum": "3a418cb9383e8fcc215453b5b399a689"
+    },
+    "data/responses/borradores/20260831185616_655096.rds": {
+      "checksum": "368e400020da7d461d7de9e8c4aa0e62"
     },
     "data/responses/sesiones_completas/20260830182743_286912/atributos_presentados_dce.csv": {
       "checksum": "f5199e96b7737834a008fafca7be4c18"
@@ -2933,6 +2939,18 @@
     },
     "data/responses/sesiones_completas/20260830190207_212829/participante.csv": {
       "checksum": "32813ee06c7a7871813d85e668693538"
+    },
+    "data/responses/sesiones_completas/20260903102613_708192/atributos_presentados_dce.csv": {
+      "checksum": "2a9d84a187cccbd30d7309208729f146"
+    },
+    "data/responses/sesiones_completas/20260903102613_708192/elecciones_dce.csv": {
+      "checksum": "b49c069cf04fd7be172a927ea627a149"
+    },
+    "data/responses/sesiones_completas/20260903102613_708192/estado_final.rds": {
+      "checksum": "5be9b0e2bfea5836d5a383866dfe21cc"
+    },
+    "data/responses/sesiones_completas/20260903102613_708192/participante.csv": {
+      "checksum": "4bdd2542d0257bbf9413ff6419722573"
     },
     "R/db_supabase.R": {
       "checksum": "499035acf912248ad41b160c4658f482"

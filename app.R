@@ -475,8 +475,97 @@ ui <- page_fluid(
             grid-template-columns: 1fr;
           }
 
+          /* En móviles, cada atributo se presenta verticalmente:
+             nombre del atributo -> Alternativa A -> Alternativa B.
+             Así se evita el desplazamiento horizontal de la tabla. */
+          .dce-comparacion-wrapper {
+            overflow-x: visible;
+          }
+
           .dce-comparacion {
-            min-width: 700px;
+            min-width: 0;
+            width: 100%;
+            table-layout: auto;
+          }
+
+          .dce-comparacion thead {
+            display: none;
+          }
+
+          .dce-comparacion tbody,
+          .dce-comparacion tr,
+          .dce-comparacion td {
+            display: block;
+            width: 100%;
+          }
+
+          .dce-comparacion tbody tr {
+            padding: 0;
+          }
+
+          .dce-comparacion tbody tr:not(:last-child) {
+            border-bottom: 1px solid #d9e2e8;
+          }
+
+          .dce-comparacion th,
+          .dce-comparacion td,
+          .dce-comparacion tbody tr:last-child td {
+            border-bottom: none;
+          }
+
+          .dce-celda-atributo {
+            padding: 12px 14px 9px 14px;
+            background: #f3f6f8;
+          }
+
+          .dce-celda-alternativa {
+            padding: 10px 14px;
+            text-align: left;
+          }
+
+          .dce-celda-alternativa:nth-child(2) {
+            border-top: 1px solid #eef2f4;
+          }
+
+          .dce-celda-alternativa:nth-child(3) {
+            border-top: 1px dashed #e1e7eb;
+          }
+
+          .dce-celda-alternativa:nth-child(2)::before,
+          .dce-celda-alternativa:nth-child(3)::before {
+            display: block;
+            margin-bottom: 4px;
+            color: #2c3e50;
+            font-size: 0.88rem;
+            font-weight: 700;
+          }
+
+          .dce-celda-alternativa:nth-child(2)::before {
+            content: 'Alternativa A';
+          }
+
+          .dce-celda-alternativa:nth-child(3)::before {
+            content: 'Alternativa B';
+          }
+
+          .dce-fila-precio {
+            border-top: 2px solid #cbd5dc;
+          }
+
+          .dce-fila-precio td {
+            border-top: none;
+          }
+
+          .dce-nivel-detalle[open] {
+            margin-left: 0;
+            margin-right: 0;
+          }
+
+          /* Las opciones de respuesta también se apilan en pantallas angostas. */
+          .dce-eleccion .radio-inline {
+            display: block;
+            margin-left: 0;
+            margin-bottom: 8px;
           }
         }
       ")
