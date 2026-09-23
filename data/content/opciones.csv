@@ -7,11 +7,11 @@ conocimiento_ia,ninguno,Ninguno,1
 conocimiento_ia,basico,Básico,2
 conocimiento_ia,intermedio,Intermedio,3
 conocimiento_ia,avanzado,Avanzado,4
-actividad_principal,comercio_minorista,Comercio minorista,1
-actividad_principal,comercio_mayorista,Comercio mayorista,2
-actividad_principal,servicios,Servicios,3
-actividad_principal,manufactura,Manufactura,4
-actividad_principal,otra,Otra actividad,5
+actividad_principal,comercio_minorista,Comercio minorista (venta de productos directamente al consumidor final),1
+actividad_principal,comercio_mayorista,Comercio mayorista (venta de productos principalmente a empresas o negocios),2
+actividad_principal,servicios,Servicios (prestación de servicios a personas o empresas),3
+actividad_principal,manufactura,Manufactura (fabricación o elaboración de productos),4
+actividad_principal,otra,Otra actividad (distinta de las anteriores),5
 ventas_anuales,hasta_2400_uf,Hasta 2.400 UF,1
 ventas_anuales,2400_25000_uf,Más de 2.400 y hasta 25.000 UF,2
 ventas_anuales,25000_100000_uf,Más de 25.000 y hasta 100.000 UF,3
