@@ -436,7 +436,7 @@
       "description": {
         "Package": "bit64",
         "Title": "A S3 Class for Vectors of 64bit Integers",
-        "Version": "4.8.4",
+        "Version": "4.8.6",
         "Authors@R": "c(\n    person(\"Michael\", \"Chirico\", email=\"michaelchirico4@gmail.com\", role=c(\"aut\", \"cre\")),\n    person(\"Jens\", \"Oehlschlägel\", role=\"aut\"),\n    person(\"Leonardo\", \"Silvestri\", role=\"ctb\"),\n    person(\"Ofek\", \"Shilon\", role=\"ctb\"),\n    person(\"Christian\", \"Ullerich\", role=\"ctb\")\n  )",
         "Depends": "R (>= 3.5.0)",
         "Description": "\n  Package 'bit64' provides serializable S3 atomic 64bit (signed) integers.\n  These are useful for handling database keys and exact counting in +-2^63.\n  WARNING: do not use them as replacement for 32bit integers, integer64 are not\n  supported for subscripting by R-core and they have different semantics when\n  combined with double, e.g. integer64 + double => integer64.\n  Class integer64 can be used in vectors, matrices, arrays and data.frames.\n  Methods are available for coercion from and to logicals, integers, doubles,\n  characters and factors as well as many elementwise and summary functions.\n  Many fast algorithmic operations such as 'match' and 'order' support inter-\n  active data exploration and manipulation and optionally leverage caching.",
@@ -452,12 +452,12 @@
         "Config/Needs/website": "tidyverse/tidytemplate",
         "Config/roxygen2/version": "8.0.0",
         "NeedsCompilation": "yes",
-        "Packaged": "2026-08-19 16:52:49 UTC; chiricom",
+        "Packaged": "2026-09-01 05:45:08 UTC; chiricom",
         "Author": "Michael Chirico [aut, cre],\n  Jens Oehlschlägel [aut],\n  Leonardo Silvestri [ctb],\n  Ofek Shilon [ctb],\n  Christian Ullerich [ctb]",
         "Maintainer": "Michael Chirico <michaelchirico4@gmail.com>",
         "Repository": "RSPM",
-        "Date/Publication": "2026-08-20 05:23:42 UTC",
-        "Built": "R 4.6.0; x86_64-w64-mingw32; 2026-08-21 04:28:51 UTC; windows",
+        "Date/Publication": "2026-09-01 09:30:09 UTC",
+        "Built": "R 4.6.0; x86_64-w64-mingw32; 2026-09-02 04:14:47 UTC; windows",
         "Archs": "x64",
         "RemoteType": "standard",
         "RemoteRef": "bit64",
@@ -465,7 +465,7 @@
         "RemoteRepos": "https://packagemanager.posit.co/cran/latest",
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "4.8.4"
+        "RemoteSha": "4.8.6"
       }
     },
     "blob": {
@@ -2450,6 +2450,34 @@
         "RemoteSha.Version": "0.1.7-2"
       }
     },
+    "survival": {
+      "Source": "CRAN",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Title": "Survival Analysis",
+        "Priority": "recommended",
+        "Package": "survival",
+        "Version": "3.8-6",
+        "Date": "2026-01-09",
+        "Depends": "R (>= 3.5.0)",
+        "Imports": "graphics, Matrix, methods, splines, stats, utils",
+        "LazyData": "Yes",
+        "LazyDataCompression": "xz",
+        "ByteCompile": "Yes",
+        "Authors@R": "c(person(c(\"Terry\", \"M\"), \"Therneau\",\n                    email=\"therneau.terry@mayo.edu\",\n\t            role=c(\"aut\", \"cre\")),\n               person(\"Thomas\", \"Lumley\", role=c(\"ctb\", \"trl\"),\n\t       comment=\"original S->R port and R maintainer until 2009\"),\n\t       person(\"Atkinson\", \"Elizabeth\", role=\"ctb\"),\n\t       person(\"Crowson\", \"Cynthia\", role=\"ctb\"))",
+        "Description": "Contains the core survival analysis routines, including\n\t     definition of Surv objects, \n\t     Kaplan-Meier and Aalen-Johansen (multi-state) curves, Cox models,\n\t     and parametric accelerated failure time models.",
+        "License": "LGPL (>= 2)",
+        "URL": "https://github.com/therneau/survival",
+        "NeedsCompilation": "yes",
+        "Packaged": "2026-01-13 02:06:39 UTC; therneau",
+        "Author": "Terry M Therneau [aut, cre],\n  Thomas Lumley [ctb, trl] (original S->R port and R maintainer until\n    2009),\n  Atkinson Elizabeth [ctb],\n  Crowson Cynthia [ctb]",
+        "Maintainer": "Terry M Therneau <therneau.terry@mayo.edu>",
+        "Repository": "CRAN",
+        "Date/Publication": "2026-01-16 09:00:02 UTC",
+        "Built": "R 4.6.1; x86_64-w64-mingw32; 2026-06-24 08:30:55 UTC; windows",
+        "Archs": "x64"
+      }
+    },
     "tableHTML": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2880,20 +2908,17 @@
     }
   },
   "files": {
-    ".Renviron.example": {
-      "checksum": "c14993caa76d3c7c1fd186630754b62e"
-    },
     ".Rprofile": {
-      "checksum": "ba79b575b9913e70f0913c24bdfc9295"
+      "checksum": "d29365a2f7fcb2bfa42add66b2f60bfd"
     },
     "app.R": {
       "checksum": "aac5c7dabf6f462cb8a5599f4f5005b3"
     },
     "data/content/instrumento_DCE.xlsx": {
-      "checksum": "950909a48fc9113aff77214b59f09a19"
+      "checksum": "e2544e1d387f41f263c1f12364eac8d9"
     },
     "data/content/opciones.csv": {
-      "checksum": "abb65a12b0efb80592e89c3d0c45f020"
+      "checksum": "a03219c34fb616837b7f0ee5de4fe732"
     },
     "data/content/preguntas.csv": {
       "checksum": "9cb95b2166af087c6b53f00f2aea6751"
@@ -2902,112 +2927,16 @@
       "checksum": "64dabde3ddc1b53761e52cc0e7d80a4c"
     },
     "data/design/diseno_dce.csv": {
-      "checksum": "5374926b9c167d0f546c80c2d88678ea"
-    },
-    "data/design/README.txt": {
-      "checksum": "1d0856d07f354257247db690ea05fa3d"
-    },
-    "data/design/resumen_diseno_dce.csv": {
-      "checksum": "c473ebc6311bd594576eb182e9b88627"
-    },
-    "data/responses/borradores/20260831165828_967494.rds": {
-      "checksum": "3a418cb9383e8fcc215453b5b399a689"
-    },
-    "data/responses/borradores/20260831185616_655096.rds": {
-      "checksum": "368e400020da7d461d7de9e8c4aa0e62"
-    },
-    "data/responses/borradores/20260903104554_117232.rds": {
-      "checksum": "3dab6a72a8acbdb6a15b15f272c76e1c"
-    },
-    "data/responses/borradores/20260903104628_981018.rds": {
-      "checksum": "af45bf7e8583891d94da6c5912ff7501"
-    },
-    "data/responses/sesiones_completas/20260830182743_286912/atributos_presentados_dce.csv": {
-      "checksum": "f5199e96b7737834a008fafca7be4c18"
-    },
-    "data/responses/sesiones_completas/20260830182743_286912/elecciones_dce.csv": {
-      "checksum": "6d0bf83e7b7985a76a88ef3811b42b04"
-    },
-    "data/responses/sesiones_completas/20260830182743_286912/estado_final.rds": {
-      "checksum": "003d46979418491c51d729ed15b577a8"
-    },
-    "data/responses/sesiones_completas/20260830182743_286912/participante.csv": {
-      "checksum": "f96577ecee241de63af1fe3740a5f910"
-    },
-    "data/responses/sesiones_completas/20260830190207_212829/atributos_presentados_dce.csv": {
-      "checksum": "5ac48de8914e60d64aa878617978ad38"
-    },
-    "data/responses/sesiones_completas/20260830190207_212829/elecciones_dce.csv": {
-      "checksum": "b4ffa712e5cdf8d39645c9b704611ceb"
-    },
-    "data/responses/sesiones_completas/20260830190207_212829/estado_final.rds": {
-      "checksum": "93b630d511a89567057d93ed551451ee"
-    },
-    "data/responses/sesiones_completas/20260830190207_212829/participante.csv": {
-      "checksum": "32813ee06c7a7871813d85e668693538"
-    },
-    "data/responses/sesiones_completas/20260903102613_708192/atributos_presentados_dce.csv": {
-      "checksum": "2a9d84a187cccbd30d7309208729f146"
-    },
-    "data/responses/sesiones_completas/20260903102613_708192/elecciones_dce.csv": {
-      "checksum": "b49c069cf04fd7be172a927ea627a149"
-    },
-    "data/responses/sesiones_completas/20260903102613_708192/estado_final.rds": {
-      "checksum": "5be9b0e2bfea5836d5a383866dfe21cc"
-    },
-    "data/responses/sesiones_completas/20260903102613_708192/participante.csv": {
-      "checksum": "4bdd2542d0257bbf9413ff6419722573"
+      "checksum": "34ee4dda38ac7a366094e1a8c568f899"
     },
     "R/db_supabase.R": {
-      "checksum": "499035acf912248ad41b160c4658f482"
+      "checksum": "12b5033245780e3476a9ce7c2d54763f"
     },
     "R/helpers.R": {
-      "checksum": "d1c3218d77e574f5ab8c1953dcbe9f50"
+      "checksum": "77faa1aafbf7e4a144abd688f46b4a25"
     },
     "renv.lock": {
-      "checksum": "aea25c3a13dc42d7dfb996d26550b144"
-    },
-    "scripts/consolidar_respuestas_dce.R": {
-      "checksum": "8f1672bb85ab0517d9e94d5ebb38f93d"
-    },
-    "scripts/generar_diseno_dce.R": {
-      "checksum": "60e3abad01547d58b9d9b05306a4fe8f"
-    },
-    "scripts/qa_final_instrumento.R": {
-      "checksum": "762e191cb08f8a14fca04cc69c97fe96"
-    },
-    "scripts/sincronizar_pendientes_supabase.R": {
-      "checksum": "1ab6ee12fb3134fe0427947b5c0023e4"
-    },
-    "scripts/test_diseno_dce.R": {
-      "checksum": "7917f75a84211c39d450d5e4206ec85b"
-    },
-    "scripts/test_generacion_perfiles_dce.R": {
-      "checksum": "8b793e0aa07c94ddaa3811ecdeefa4c8"
-    },
-    "scripts/test_guardado_respuestas_dce.R": {
-      "checksum": "749394256ca7f26dd9a0b498d30470cd"
-    },
-    "scripts/test_integracion_dual_supabase.R": {
-      "checksum": "7cc389ed1f58e46150ef76a94ea73e4c"
-    },
-    "scripts/test_restricciones_dce.R": {
-      "checksum": "3357937c354064d17e7aec6fdaa432c8"
-    },
-    "scripts/test_supabase_conexion.R": {
-      "checksum": "12482e1ac08f5367290b573bcb471950"
-    },
-    "scripts/test_supabase_guardado.R": {
-      "checksum": "39cce40f250663e41b7551138d305ff1"
-    },
-    "scripts/test_supabase_seguridad.R": {
-      "checksum": "46650e357451834760602a0fde2791ff"
-    },
-    "sql/001_crear_tablas_supabase.sql": {
-      "checksum": "28e614608122d9e285800a1442aebd0e"
-    },
-    "sql/003_establecer_password_tesis_dce_app.sql": {
-      "checksum": "6b6a0547dbaf359241e2b07d2ac7b522"
+      "checksum": "c8407cec0ce6e9cd51b2587163ba4ea6"
     }
   },
   "users": null
