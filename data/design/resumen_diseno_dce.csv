@@ -1,4 +1,4 @@
-"categoria_id","n_sets","n_blocks","tareas_por_bloque","n_perfiles_validos","n_parametros_atributos","n_parametros_total","DB_error","ortogonalidad","seed"
-"gestion_marketing",16,4,4,2295,15,16,0.250921725594027,0.821242253816368,20261830
-"atencion_cliente",16,4,4,357,10,11,0.180523300340302,0.839985228298101,20262830
-"inventario_logistica",16,4,4,156,9,10,0.221237621826533,0.854446225955753,20263830
+"categoria_id","n_sets","n_blocks","tareas_por_bloque","n_perfiles_validos","n_parametros_atributos","n_parametros_total","DB_error_base","DB_error_3precios","eficiencia_D_relativa_pct","ortogonalidad_base","seed_base","perfiles_precio_bajo","perfiles_precio_medio","perfiles_precio_alto","tareas_bajo_medio","tareas_bajo_alto","tareas_medio_alto"
+"gestion_marketing",16,4,4,2295,15,16,0.250921725594027,0.257749283211776,97.3510857013175,0.821242253816368,20261830,11,10,11,5,6,5
+"atencion_cliente",16,4,4,357,10,11,0.180523300340302,0.188621491380212,95.7066445712775,0.839985228298101,20262830,11,10,11,5,6,5
+"inventario_logistica",16,4,4,156,9,10,0.221237621826533,0.232594906729633,95.1171394667287,0.854446225955753,20263830,11,10,11,5,6,5

@@ -1,8 +1,20 @@
 # ==================================================
-# QA FINAL LOCAL DEL INSTRUMENTO DCE
+# QA FINAL LOCAL DEL INSTRUMENTO DCE - 3 PRECIOS
 # ==================================================
 # Este script NO modifica el instrumento, el diseño ni las respuestas.
-# Solo comprueba que la versión local esté coherente antes del despliegue.
+# Comprueba la versión local antes del despliegue.
+#
+# Controles adicionales de esta versión:
+# - 16 choice sets por categoría, 4 bloques x 4 tareas.
+# - Los 3 precios están presentes en todas las categorías y bloques.
+# - Cada precio aparece 2 o 3 veces por bloque (8 perfiles).
+# - A y B nunca tienen el mismo precio.
+# - Balance global de precio 11/10/11.
+# - Pares bajo-medio / bajo-alto / medio-alto = 5/6/5.
+# - No hay tareas duplicadas dentro de una categoría.
+# - Los perfiles respetan las restricciones DCE.
+# - La normalización para Supabase convierte precio_clp a BIGINT seguro.
+# ==================================================
 
 cat("\n==============================================\n")
 cat("QA FINAL LOCAL DEL INSTRUMENTO DCE\n")
@@ -36,8 +48,10 @@ cat("\n--- 1. Archivos esenciales ---\n")
 archivos_esenciales <- c(
   "app.R",
   "R/helpers.R",
+  "R/db_supabase.R",
   "data/content/instrumento_DCE.xlsx",
   "data/design/diseno_dce.csv",
+  "scripts/generar_diseno_dce.R",
   "renv.lock"
 )
 
@@ -59,7 +73,14 @@ if (length(fallos) > 0) {
 
 cat("\n--- 2. Sintaxis de R ---\n")
 
-for (ruta in c("R/helpers.R", "app.R")) {
+archivos_r <- c(
+  "R/helpers.R",
+  "R/db_supabase.R",
+  "app.R",
+  "scripts/generar_diseno_dce.R"
+)
+
+for (ruta in archivos_r) {
   resultado <- tryCatch(
     {
       parse(file = ruta)
@@ -81,12 +102,13 @@ if (length(fallos) > 0) {
 }
 
 # --------------------------------------------------
-# 3. Cargar helpers e instrumento
+# 3. Cargar helpers, BD e instrumento
 # --------------------------------------------------
 
-cat("\n--- 3. Instrumento XLSX ---\n")
+cat("\n--- 3. Instrumento XLSX y funciones ---\n")
 
 source("R/helpers.R")
+source("R/db_supabase.R")
 
 instrumento <- cargar_instrumento_xlsx(
   "data/content/instrumento_DCE.xlsx"
@@ -116,21 +138,33 @@ tryCatch(
   }
 )
 
-if (exists("validar_catalogo_dce", mode = "function")) {
-  tryCatch(
-    {
-      validar_catalogo_dce(
-        categorias = categorias,
-        atributos = atributos,
-        niveles = niveles
-      )
-      ok("Catálogo DCE válido")
-    },
-    error = function(e) {
-      fail(paste("Catálogo DCE inválido ->", conditionMessage(e)))
-    }
-  )
-}
+tryCatch(
+  {
+    validar_catalogo_dce(
+      categorias = categorias,
+      atributos = atributos,
+      niveles = niveles
+    )
+    ok("Catálogo DCE válido")
+  },
+  error = function(e) {
+    fail(paste("Catálogo DCE inválido ->", conditionMessage(e)))
+  }
+)
+
+tryCatch(
+  {
+    validar_configuracion_restricciones_dce(
+      categorias = categorias,
+      atributos = atributos,
+      niveles = niveles
+    )
+    ok("Configuración de restricciones DCE válida")
+  },
+  error = function(e) {
+    fail(paste("Restricciones DCE inválidas ->", conditionMessage(e)))
+  }
+)
 
 # --------------------------------------------------
 # 4. Textos congelados
@@ -166,22 +200,18 @@ comprobar_frase(
   "agregada y anónima",
   "Consentimiento menciona tratamiento agregado y anónimo"
 )
-
 comprobar_frase(
   "Acepto participar",
   "Consentimiento explícito presente"
 )
-
 comprobar_frase(
   "No contrataría ninguna",
   "Nombre final de la alternativa de no elección presente"
 )
-
 comprobar_frase(
   "Puede cerrar esta ventana",
   "Cierre informa que la ventana puede cerrarse"
 )
-
 comprobar_frase(
   "Código de respuesta",
   "Pantalla final usa 'Código de respuesta'"
@@ -204,7 +234,7 @@ for (frase in frases_obsoletas) {
 }
 
 # --------------------------------------------------
-# 5. Configuración experimental congelada
+# 5. Configuración experimental
 # --------------------------------------------------
 
 cat("\n--- 5. Configuración experimental ---\n")
@@ -244,9 +274,6 @@ if (exists("diseno")) {
   for (categoria_id in categorias_ids) {
     dcat <- diseno[diseno$categoria_id == categoria_id, , drop = FALSE]
 
-    # tarea_diseno se numera 1..4 DENTRO de cada bloque.
-    # Por eso el choice set se identifica por la combinación bloque + tarea_diseno,
-    # no solo por tarea_diseno.
     ids_sets <- unique(
       paste(
         as.integer(dcat$bloque),
@@ -257,14 +284,13 @@ if (exists("diseno")) {
 
     bloques <- sort(unique(as.integer(dcat$bloque)))
 
-    if (length(ids_sets) == 16) {
-      ok(paste(categoria_id, "contiene 16 choice sets (4 bloques x 4 tareas)"))
+    if (length(ids_sets) == 16L) {
+      ok(paste(categoria_id, "contiene 16 choice sets"))
     } else {
       fail(
         paste(
           categoria_id,
-          "contiene",
-          length(ids_sets),
+          "contiene", length(ids_sets),
           "choice sets; se esperaban 16"
         )
       )
@@ -283,16 +309,14 @@ if (exists("diseno")) {
         )
       )
 
-      if (length(tareas_bloque) == 4) {
+      if (length(tareas_bloque) == 4L) {
         ok(paste(categoria_id, "- bloque", bloque, "contiene 4 tareas"))
       } else {
         fail(
           paste(
             categoria_id,
-            "- bloque",
-            bloque,
-            "contiene",
-            length(tareas_bloque),
+            "- bloque", bloque,
+            "contiene", length(tareas_bloque),
             "tareas; se esperaban 4"
           )
         )
@@ -302,10 +326,265 @@ if (exists("diseno")) {
 }
 
 # --------------------------------------------------
-# 6. Tests automáticos existentes
+# 6. QA específico de los 3 precios
 # --------------------------------------------------
 
-cat("\n--- 6. Tests automáticos ---\n")
+cat("\n--- 6. Cobertura y balance de precios ---\n")
+
+if (exists("diseno")) {
+  for (categoria_id in categorias_ids) {
+    niveles_precio_df <- obtener_niveles_atributo(
+      categoria_id = categoria_id,
+      atributo_id = "precio_mensual",
+      niveles = niveles
+    )
+
+    if (nrow(niveles_precio_df) != 3L) {
+      fail(
+        paste(
+          categoria_id,
+          "no tiene exactamente 3 niveles de precio en el catálogo"
+        )
+      )
+      next
+    }
+
+    niveles_precio <- as.character(niveles_precio_df$nivel_id)
+
+    dcat <- diseno[
+      diseno$categoria_id == categoria_id,
+      ,
+      drop = FALSE
+    ]
+
+    dp <- dcat[dcat$atributo_id == "precio_mensual", , drop = FALSE]
+
+    conteos <- table(
+      factor(
+        as.character(dp$nivel_id),
+        levels = niveles_precio
+      )
+    )
+
+    if (identical(as.integer(conteos), c(11L, 10L, 11L))) {
+      ok(
+        paste0(
+          categoria_id,
+          " balance global de precio = 11/10/11"
+        )
+      )
+    } else {
+      fail(
+        paste0(
+          categoria_id,
+          " balance global de precio distinto de 11/10/11: ",
+          paste(as.integer(conteos), collapse = "/")
+        )
+      )
+    }
+
+    pares <- c(BM = 0L, BA = 0L, MA = 0L)
+
+    for (bloque in 1:4) {
+      db <- dp[as.integer(dp$bloque) == bloque, , drop = FALSE]
+
+      conteo_bloque <- table(
+        factor(
+          as.character(db$nivel_id),
+          levels = niveles_precio
+        )
+      )
+
+      if (
+        length(unique(as.character(db$nivel_id))) == 3L &&
+        all(as.integer(conteo_bloque) >= 2L) &&
+        all(as.integer(conteo_bloque) <= 3L)
+      ) {
+        ok(
+          paste0(
+            categoria_id,
+            " - bloque ", bloque,
+            " contiene los 3 precios (cada uno 2-3 veces)"
+          )
+        )
+      } else {
+        fail(
+          paste0(
+            categoria_id,
+            " - bloque ", bloque,
+            " no presenta correctamente los 3 precios: ",
+            paste(as.integer(conteo_bloque), collapse = "/")
+          )
+        )
+      }
+
+      for (tarea in 1:4) {
+        dt <- db[as.integer(db$tarea_diseno) == tarea, , drop = FALSE]
+        z <- as.character(dt$nivel_id)
+
+        if (length(z) != 2L || length(unique(z)) != 2L) {
+          fail(
+            paste0(
+              categoria_id,
+              " - bloque ", bloque,
+              " tarea ", tarea,
+              ": A y B no tienen precios distintos"
+            )
+          )
+          next
+        }
+
+        pos <- sort(match(z, niveles_precio))
+        clave <- paste(pos, collapse = "-")
+
+        tipo <- switch(
+          clave,
+          "1-2" = "BM",
+          "1-3" = "BA",
+          "2-3" = "MA",
+          NA_character_
+        )
+
+        if (is.na(tipo)) {
+          fail(
+            paste0(
+              categoria_id,
+              " - bloque ", bloque,
+              " tarea ", tarea,
+              ": par de precios no reconocido"
+            )
+          )
+        } else {
+          pares[[tipo]] <- pares[[tipo]] + 1L
+        }
+      }
+    }
+
+    if (identical(as.integer(pares[c("BM", "BA", "MA")]), c(5L, 6L, 5L))) {
+      ok(paste(categoria_id, "comparaciones BM/BA/MA = 5/6/5"))
+    } else {
+      fail(
+        paste0(
+          categoria_id,
+          " comparaciones BM/BA/MA distintas de 5/6/5: ",
+          paste(as.integer(pares), collapse = "/")
+        )
+      )
+    }
+  }
+}
+
+# --------------------------------------------------
+# 7. Duplicados y coherencia de perfiles
+# --------------------------------------------------
+
+cat("\n--- 7. Duplicados y perfiles ---\n")
+
+if (exists("diseno")) {
+  for (categoria_id in categorias_ids) {
+    dcat <- diseno[diseno$categoria_id == categoria_id, , drop = FALSE]
+
+    claves_tarea <- character(0)
+
+    for (bloque in 1:4) {
+      for (tarea in 1:4) {
+        dt <- dcat[
+          as.integer(dcat$bloque) == bloque &
+            as.integer(dcat$tarea_diseno) == tarea,
+          ,
+          drop = FALSE
+        ]
+
+        ids_A <- unique(as.character(dt$perfil_id[dt$alternativa == "A"]))
+        ids_B <- unique(as.character(dt$perfil_id[dt$alternativa == "B"]))
+
+        if (length(ids_A) != 1L || length(ids_B) != 1L) {
+          fail(
+            paste0(
+              categoria_id,
+              " - ", bloque, "/", tarea,
+              ": perfil_id no único en A o B"
+            )
+          )
+          next
+        }
+
+        if (identical(ids_A[[1]], ids_B[[1]])) {
+          fail(
+            paste0(
+              categoria_id,
+              " - ", bloque, "/", tarea,
+              ": A y B son el mismo perfil"
+            )
+          )
+        }
+
+        claves_tarea <- c(
+          claves_tarea,
+          paste(sort(c(ids_A[[1]], ids_B[[1]])), collapse = " || ")
+        )
+      }
+    }
+
+    if (anyDuplicated(claves_tarea) == 0L) {
+      ok(paste(categoria_id, "no contiene tareas A/B duplicadas"))
+    } else {
+      fail(paste(categoria_id, "contiene tareas A/B duplicadas"))
+    }
+  }
+}
+
+# --------------------------------------------------
+# 8. Normalización de precio para Supabase BIGINT
+# --------------------------------------------------
+
+cat("\n--- 8. Compatibilidad precio_clp con Supabase ---\n")
+
+if (exists("normalizar_atributos_bd_dce", mode = "function")) {
+  prueba <- data.frame(
+    precio_clp = 110000.00000000001,
+    stringsAsFactors = FALSE
+  )
+
+  normalizada <- tryCatch(
+    normalizar_atributos_bd_dce(prueba),
+    error = function(e) e
+  )
+
+  if (inherits(normalizada, "error")) {
+    fail(
+      paste(
+        "normalizar_atributos_bd_dce falló ->",
+        conditionMessage(normalizada)
+      )
+    )
+  } else {
+    valor <- normalizada$precio_clp[[1]]
+
+    if (
+      is.integer(valor) &&
+      identical(valor, 110000L)
+    ) {
+      ok("precio_clp se normaliza a entero exacto para BIGINT")
+    } else {
+      fail(
+        paste0(
+          "precio_clp no quedó como entero exacto. Valor/clase: ",
+          paste(valor, collapse = ","),
+          " / ", paste(class(valor), collapse = ",")
+        )
+      )
+    }
+  }
+} else {
+  fail("No existe normalizar_atributos_bd_dce()")
+}
+
+# --------------------------------------------------
+# 9. Tests automáticos existentes
+# --------------------------------------------------
+
+cat("\n--- 9. Tests automáticos ---\n")
 
 scripts_test <- c(
   "scripts/test_restricciones_dce.R",
@@ -338,10 +617,10 @@ for (ruta in scripts_test) {
 }
 
 # --------------------------------------------------
-# 7. Escritura de respuestas
+# 10. Escritura de respuestas
 # --------------------------------------------------
 
-cat("\n--- 7. Almacenamiento local ---\n")
+cat("\n--- 10. Almacenamiento local ---\n")
 
 ruta_respuestas <- "data/responses"
 dir.create(ruta_respuestas, recursive = TRUE, showWarnings = FALSE)
@@ -368,6 +647,7 @@ if (isTRUE(escritura_ok)) {
 
 ruta_completas <- file.path(ruta_respuestas, "sesiones_completas")
 ruta_borradores <- file.path(ruta_respuestas, "borradores")
+ruta_pendientes <- file.path(ruta_respuestas, "pendientes_supabase")
 
 n_completas <- if (dir.exists(ruta_completas)) {
   length(list.dirs(ruta_completas, recursive = FALSE, full.names = TRUE))
@@ -381,50 +661,77 @@ n_borradores <- if (dir.exists(ruta_borradores)) {
   0L
 }
 
+n_pendientes <- if (dir.exists(ruta_pendientes)) {
+  length(list.files(ruta_pendientes, pattern = "\\.rds$", full.names = TRUE))
+} else {
+  0L
+}
+
 if (n_completas > 0) {
   warn(
     paste0(
       "Hay ", n_completas,
-      " sesión(es) completa(s) en data/responses. Si son pruebas, deben limpiarse antes del levantamiento real."
+      " sesión(es) completa(s) locales. No se eliminan automáticamente; revisar si corresponden a pruebas."
     )
   )
 } else {
-  ok("No hay sesiones completas acumuladas")
+  ok("No hay sesiones completas locales acumuladas")
 }
 
 if (n_borradores > 0) {
   warn(
     paste0(
       "Hay ", n_borradores,
-      " borrador(es) en data/responses. Revisar/limpiar antes del levantamiento real."
+      " borrador(es) locales. Revisar antes del despliegue."
     )
   )
 } else {
-  ok("No hay borradores acumulados")
+  ok("No hay borradores locales acumulados")
+}
+
+if (n_pendientes > 0) {
+  fail(
+    paste0(
+      "Hay ", n_pendientes,
+      " sincronización(es) pendiente(s) de Supabase. Sincronizar antes del despliegue."
+    )
+  )
+} else {
+  ok("No hay sincronizaciones pendientes de Supabase")
 }
 
 # --------------------------------------------------
-# 8. Reproducibilidad del proyecto
+# 11. Reproducibilidad
 # --------------------------------------------------
 
-cat("\n--- 8. Reproducibilidad ---\n")
+cat("\n--- 11. Reproducibilidad ---\n")
 
 if (file.exists("renv.lock")) {
   ok("renv.lock presente")
 
   lock_txt <- paste(readLines("renv.lock", warn = FALSE), collapse = "\n")
 
-  if (grepl('"idefix"', lock_txt, fixed = TRUE)) {
-    ok("idefix aparece registrado en renv.lock")
-  } else {
-    warn("idefix no aparece en renv.lock. Ejecutar renv::snapshot() para congelar la dependencia usada al generar el diseño.")
+  for (pkg in c("idefix", "DBI", "RPostgres")) {
+    patron <- paste0('"', pkg, '"')
+
+    if (grepl(patron, lock_txt, fixed = TRUE)) {
+      ok(paste(pkg, "aparece registrado en renv.lock"))
+    } else {
+      warn(
+        paste0(
+          pkg,
+          " no aparece en renv.lock. Ejecutar renv::snapshot() antes de desplegar."
+        )
+      )
+    }
   }
 }
 
 if (file.exists(".RData")) {
   warn(
     paste0(
-      "Existe .RData en la raíz del proyecto. Para una versión reproducible de campo, se recomienda no restaurar/guardar workspaces automáticamente y retirar este archivo antes del despliegue."
+      "Existe .RData en la raíz. Para una versión reproducible de campo, ",
+      "se recomienda no restaurar/guardar workspaces automáticamente."
     )
   )
 } else {
@@ -454,4 +761,4 @@ if (length(fallos) > 0) {
 }
 
 cat("\nQA FINAL LOCAL PASÓ ✅\n")
-cat("Las advertencias no impiden ejecutar la app, pero deben resolverse antes del levantamiento real.\n")
+cat("El diseño cumple la estructura experimental y la cobertura de 3 precios.\n")

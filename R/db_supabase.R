@@ -250,7 +250,7 @@ normalizar_atributos_bd_dce <- function(df) {
     df[[col]] <- as.integer(df[[col]])
   }
 
-  df$precio_clp <- as.numeric(df$precio_clp)
+  df$precio_clp <- as.integer(round(as.numeric(df$precio_clp)))
   df$alternativa_elegida <- as.logical(df$alternativa_elegida)
 
   df

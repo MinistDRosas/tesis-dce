@@ -4641,7 +4641,9 @@ crear_tabla_atributos_presentados_dce <- function(
           precio_clp <- NA_real_
 
           if (identical(atributo_id, "precio_mensual")) {
-            precio_clp <- precio_nivel_a_100k_dce(nivel_id) * 100000
+            precio_clp <- as.integer(
+              round(precio_nivel_a_100k_dce(nivel_id) * 100000)
+            )
           }
 
           filas[[contador]] <- data.frame(
